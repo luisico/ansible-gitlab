@@ -1,0 +1,27 @@
+---
+- name: Add official repo
+  template: dest=/etc/yum.repos.d/gitlab-ce.repo src=repo.j2 mode=0644
+
+- name: Add rpm signing key
+  get_url: dest=/etc/pki/rpm-gpg/RPM-GPG-KEY-gitlab url=https://packages.gitlab.com/gitlab/gitlab-ce/gpgkey mode=0644
+
+- name: Install GitLab and dependencies
+  yum: name={{item}} state=present enablerepo=gitlab-ce
+  with_items:
+    - gitlab-ce
+    - curl
+    - openssh-server
+    - openssh-clients
+    - postfix
+
+- name: Enable ssh server
+  service: name=sshd state=started enabled=yes
+
+- name: Bootstrap GitLab
+  command: gitlab-ctl reconfigure
+  args:
+    creates: '/var/opt/gitlab/bootstrapped'
+
+- name: Configure GitLab
+  template: dest=/etc/gitlab/gitlab.rb src=gitlab.rb.j2 mode=0600
+  notify: Restart gitlab

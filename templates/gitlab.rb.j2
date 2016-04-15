@@ -1,0 +1,50 @@
+## Latest options listed at:
+## https://gitlab.com/gitlab-org/omnibus-gitlab/blob/master/files/gitlab-config-template/gitlab.rb.template
+
+
+## Url on which GitLab will be reachable.
+external_url '{{gitlab_external_url}}'
+
+############################
+# gitlab.yml configuration #
+############################
+gitlab_rails['gitlab_email_from'] = '{{gitlab_email_from}}'
+gitlab_rails['gitlab_email_display_name'] = '{{gitlab_email_display_name}}'
+gitlab_rails['gitlab_email_reply_to'] = '{{gitlab_email_reply_to}}'
+
+# For setting up LDAP
+gitlab_rails['ldap_enabled'] = {{gitlab_ldap_enabled|lower}}
+gitlab_rails['ldap_servers'] = YAML.load <<-'EOS'
+  main:
+    label: 'LDAP'
+    host: '{{gitlab_ldap_host}}'
+    port: {{gitlab_ldap_port}}
+    uid: '{{gitlab_ldap_uid}}'
+    method: '{{gitlab_ldap_method}}'
+    bind_dn: '{{gitlab_ldap_bind_dn}}'
+    password: '{{gitlab_ldap_password}}'
+    active_directory: {{gitlab_ldap_active_directory|lower}}
+    allow_username_or_email_login: {{gitlab_ldap_allow_username_or_email_login|lower}}
+    block_auto_created_users: false
+    base: '{{gitlab_ldap_base}}'
+    user_filter: '{{gitlab_ldap_user_filter}}'
+    attributes:
+      username: ['uid', 'userid', 'sAMAccountName']
+      email:    ['mail', 'email', 'userPrincipalName']
+      name:       'cn'
+      first_name: 'givenName'
+      last_name:  'sn'
+    group_base: '{{gitlab_ldap_group_base}}'
+    admin_group: ''
+    sync_ssh_keys: false
+EOS
+
+## For setting up different data storing directory
+git_data_dir '{{gitlab_git_data_dir}}'
+
+################
+# GitLab Nginx #
+################
+nginx['redirect_http_to_https'] = {{gitlab_nginx_redirect_http_to_https|lower}}
+nginx['ssl_certificate'] = '{{gitlab_nginx_ssl_certificate}}'
+nginx['ssl_certificate_key'] = '{{gitlab_nginx_ssl_certificate_key}}'
