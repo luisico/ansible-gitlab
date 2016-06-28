@@ -42,9 +42,24 @@ EOS
 ## For setting up different data storing directory
 git_data_dir '{{gitlab_git_data_dir}}'
 
+###############################
+# Container registry settings #
+###############################
+gitlab_rails['registry_enabled'] = false
+
 ################
 # GitLab Nginx #
 ################
 nginx['redirect_http_to_https'] = {{gitlab_nginx_redirect_http_to_https|lower}}
 nginx['ssl_certificate'] = '{{gitlab_nginx_ssl_certificate}}'
 nginx['ssl_certificate_key'] = '{{gitlab_nginx_ssl_certificate_key}}'
+
+#############################
+# Users and groups accounts #
+#############################
+manage_accounts['enable'] = true
+
+#######################
+# Storage directories #
+#######################
+manage_storage_directories['enable'] = true
