@@ -5,14 +5,21 @@
 - name: Add rpm signing key
   get_url: dest=/etc/pki/rpm-gpg/RPM-GPG-KEY-gitlab url=https://packages.gitlab.com/gitlab/gitlab-ce/gpgkey mode=0644
 
-- name: Install GitLab and dependencies
-  yum: name={{item}} state=present enablerepo=gitlab-ce
+- name: Install dependencies
+  yum: name={{item}} state=present
   with_items:
-    - gitlab-ce
     - curl
     - openssh-server
     - openssh-clients
     - postfix
+
+- name: Install GitLab version {{gitlab_version}}
+  yum: name=gitlab-ce-{{gitlab_version}} state=present enablerepo=gitlab-ce
+  when: gitlab_version != 'latest'
+
+- name: Install latest GitLab
+  yum: name=gitlab-ce state=latest enablerepo=gitlab-ce
+  when: gitlab_version == 'latest'
 
 - name: Enable ssh server
   service: name=sshd state=started enabled=yes

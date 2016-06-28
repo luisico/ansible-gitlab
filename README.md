@@ -32,7 +32,7 @@ Example:
 TODO
 ----
 - Activate `repo_gpgcheck`. Rpm from repository is not signed, but the repo itself is, however yum gets into validation problems of the repo.
-- Select gitlab version to install.
+- Daily backups.
 
 Licence
 -------

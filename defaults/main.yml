@@ -1,4 +1,6 @@
 ---
+gitlab_version: 8.6.5
+
 gitlab_external_url: '{{ansible_hostname}}'
 gitlab_git_data_dir: /var/opt/gitlab/git-data
 
