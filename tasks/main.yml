@@ -27,5 +27,5 @@
     creates: '/var/opt/gitlab/bootstrapped'
 
 - name: Configure GitLab
-  template: dest=/etc/gitlab/gitlab.rb src=gitlab.rb.j2 mode=0600
+  template: dest=/etc/gitlab/gitlab.rb src=gitlab.rb.j2 owner=root group=root mode=0600
   notify: Restart gitlab
