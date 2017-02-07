@@ -13,10 +13,12 @@
 - name: Install GitLab version {{gitlab_version}}
   yum: name=gitlab-ce-{{gitlab_version}} state=present enablerepo=gitlab-ce
   when: gitlab_version != 'latest'
+  notify: Restart gitlab
 
 - name: Install latest GitLab
   yum: name=gitlab-ce state=latest enablerepo=gitlab-ce
   when: gitlab_version == 'latest'
+  notify: Restart gitlab
 
 - name: Enable ssh server
   service: name=sshd state=started enabled=yes
