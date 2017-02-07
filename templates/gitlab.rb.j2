@@ -1,18 +1,25 @@
-## Latest options listed at:
-## https://gitlab.com/gitlab-org/omnibus-gitlab/blob/master/files/gitlab-config-template/gitlab.rb.template
+## GitLab configuration settings
 
-
-## URL on which GitLab will be reachable.
+## GitLab URL
+##! Docs: https://docs.gitlab.com/omnibus/settings/configuration.html#configuring-the-external-url-for-gitlab
 external_url '{{gitlab_external_url}}'
 
-############################
-# gitlab.yml configuration #
-############################
+##! Latest options are listed at:
+##! https://gitlab.com/gitlab-org/omnibus-gitlab/blob/master/files/gitlab-config-template/gitlab.rb.template
+
+
+################################################################################
+## gitlab.yml configuration
+##! Docs: https://gitlab.com/gitlab-org/omnibus-gitlab/blob/master/doc/settings/gitlab.yml.md
+################################################################################
+
+### Email Settings
 gitlab_rails['gitlab_email_from'] = '{{gitlab_email_from}}'
 gitlab_rails['gitlab_email_display_name'] = '{{gitlab_email_display_name}}'
 gitlab_rails['gitlab_email_reply_to'] = '{{gitlab_email_reply_to}}'
 
-# For setting up LDAP
+### LDAP Settings
+###! Docs: https://docs.gitlab.com/omnibus/settings/ldap.html
 gitlab_rails['ldap_enabled'] = {{gitlab_ldap_enabled|lower}}
 gitlab_rails['ldap_servers'] = YAML.load <<-'EOS'
   main:
@@ -39,28 +46,118 @@ gitlab_rails['ldap_servers'] = YAML.load <<-'EOS'
     sync_ssh_keys: false
 EOS
 
-## For setting up different data storing directory
+### For setting up different data storing directory
+###! Docs: https://docs.gitlab.com/omnibus/settings/configuration.html#storing-git-data-in-an-alternative-directory
 git_data_dirs({'default' => '{{gitlab_git_data_dir}}'})
 
-###############################
-# Container Registry settings #
-###############################
-gitlab_rails['registry_enabled'] = false
+################################################################################
+## Container Registry settings
+##! Docs: https://docs.gitlab.com/ce/administration/container_registry.html
+################################################################################
 
-################
-# GitLab Nginx #
-################
+################################################################################
+## GitLab Workhorse
+##! Docs: https://gitlab.com/gitlab-org/gitlab-workhorse/blob/master/README.md
+################################################################################
+
+################################################################################
+## GitLab User Settings
+##! Docs: https://docs.gitlab.com/omnibus/settings/configuration.html#changing-the-name-of-the-git-user-group
+################################################################################
+
+################################################################################
+## GitLab Unicorn
+##! Docs: https://docs.gitlab.com/omnibus/settings/unicorn.html
+################################################################################
+
+################################################################################
+## GitLab Sidekiq
+################################################################################
+
+################################################################################
+## gitlab-shell
+################################################################################
+
+################################################################
+## GitLab PostgreSQL
+################################################################
+
+################################################################################
+## GitLab Redis
+##! Docs: https://docs.gitlab.com/omnibus/settings/redis.html
+################################################################################
+
+################################################################################
+## GitLab Web server
+##! Docs: https://docs.gitlab.com/omnibus/settings/nginx.html#using-a-non-bundled-web-server
+################################################################################
+
+################################################################################
+## GitLab Nginx
+##! Docs: https://docs.gitlab.com/omnibus/settings/nginx.html
+################################################################################
+
 nginx['redirect_http_to_https'] = {{gitlab_nginx_redirect_http_to_https|lower}}
 nginx['ssl_certificate'] = '{{gitlab_nginx_ssl_certificate}}'
 nginx['ssl_certificate_key'] = '{{gitlab_nginx_ssl_certificate_key}}'
 
-#############################
-# Users and groups accounts #
-#############################
+################################################################################
+## GitLab Logging
+##! Docs: https://docs.gitlab.com/omnibus/settings/logs.html
+################################################################################
+
+################################################################################
+## Logrotate
+##! Docs: https://docs.gitlab.com/omnibus/settings/logs.html#logrotate
+################################################################################
+
+################################################################################
+## Users and groups accounts
+##! Docs: https://docs.gitlab.com/omnibus/settings/configuration.html#disable-user-and-group-account-management
+################################################################################
+
 manage_accounts['enable'] = true
 
-#######################
-# Storage directories #
-#######################
+################################################################################
+## Storage directories
+##! Disable managing storage directories ##! Docs: https://docs.gitlab.com/omnibus/settings/configuration.html#disable-storage-directories-management
+################################################################################
+
 manage_storage_directories['enable'] = true
 manage_storage_directories['manage_etc'] = true
+
+################################################################################
+## Git
+##! Advanced setting for configuring git system settings for omnibus-gitlab
+##! internal git
+################################################################################
+
+################################################################################
+## GitLab CI
+##! Docs: https://docs.gitlab.com/omnibus/gitlab-ci/README.html
+################################################################################
+
+################################################################################
+## GitLab Mattermost
+##! Docs: https://docs.gitlab.com/omnibus/gitlab-mattermost
+################################################################################
+
+################################################################################
+## Mattermost NGINX
+################################################################################
+
+################################################################################
+## Registry NGINX
+################################################################################
+
+################################################################################
+## Prometheus
+################################################################################
+
+prometheus['enable'] = {{gitlab_prometheus|lower}}
+
+################################################################################
+## Prometheus Node Exporter
+################################################################################
+
+node_exporter['enable'] = {{gitlab_node_exporter|lower}}
