@@ -36,4 +36,4 @@
   cron: name='Gitlab data backup' job='gitlab-rake gitlab:backup:create' special_time={{gitlab_backup_frequency}} user=root state=present disabled={{not gitlab_backup_enabled}}
 
 - name: Add config backup cron job
-  cron: name='Gitlab config backup' job='umask 0077; tar cf /var/opt/gitlab/backups/$(date +"\%s_\%Y_\%m_\%d_gitlab_config.tar") -C / etc/gitlab etc/ssh' special_time={{gitlab_backup_frequency}} user=root state=present disabled={{not gitlab_backup_enabled}}
+  cron: name='Gitlab config backup' job='umask 0077; tar cf /var/opt/gitlab/backups/$(date +"\%s_\%Y_\%m_\%d_gitlab_config.tar") -C / etc/gitlab etc/ssh && find /var/opt/gitlab/backups/ -name "*_gitlab_config.tar" -not -newermt "-{{gitlab_backup_keep_time}} seconds" -delete' special_time={{gitlab_backup_frequency}} user=root state=present disabled={{not gitlab_backup_enabled}}

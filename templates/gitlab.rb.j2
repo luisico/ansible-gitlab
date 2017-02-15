@@ -46,6 +46,10 @@ gitlab_rails['ldap_servers'] = YAML.load <<-'EOS'
     sync_ssh_keys: false
 EOS
 
+### Backup Settings
+###! Docs: https://docs.gitlab.com/omnibus/settings/backups.html
+gitlab_rails['backup_keep_time'] = {{gitlab_backup_keep_time}}
+
 ### For setting up different data storing directory
 ###! Docs: https://docs.gitlab.com/omnibus/settings/configuration.html#storing-git-data-in-an-alternative-directory
 git_data_dirs({'default' => '{{gitlab_git_data_dir}}'})
