@@ -27,3 +27,7 @@ gitlab_email_reply_to: 'noreply@{{ansible_hostname}}'
 
 gitlab_prometheus: false
 gitlab_node_exporter: false
+
+# Gitlab backups. See special_time in Ansible's cron module for details on frequency.
+gitlab_backup_enabled: false
+gitlab_backup_frequency: daily

@@ -31,3 +31,9 @@
 - name: Configure GitLab
   template: dest=/etc/gitlab/gitlab.rb src=gitlab.rb.j2 owner=root group=root mode=0600 backup=yes
   notify: Restart gitlab
+
+- name: Add data backup cron job
+  cron: name='Gitlab data backup' job='gitlab-rake gitlab:backup:create' special_time={{gitlab_backup_frequency}} user=root state=present disabled={{not gitlab_backup_enabled}}
+
+- name: Add config backup cron job
+  cron: name='Gitlab config backup' job='umask 0077; tar cf /var/opt/gitlab/backups/$(date +"\%s_\%Y_\%m_\%d_gitlab_config.tar") -C / etc/gitlab etc/ssh' special_time={{gitlab_backup_frequency}} user=root state=present disabled={{not gitlab_backup_enabled}}
