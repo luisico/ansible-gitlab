@@ -1,5 +1,5 @@
 ---
-gitlab_version: 8.16.4
+gitlab_version: 8.17.3
 
 gitlab_external_url: '{{ansible_hostname}}'
 gitlab_git_data_dir: /var/opt/gitlab/git-data
@@ -26,8 +26,12 @@ gitlab_email_from: 'git@{{ansible_hostname}}'
 gitlab_email_display_name: 'GitLab'
 gitlab_email_reply_to: 'noreply@{{ansible_hostname}}'
 
+# Monitoring
 gitlab_prometheus: false
-gitlab_node_exporter: false
+gitlab_node_exporter: '{{gitlab_prometheus}}'
+gitlab_redis_exporter: '{{gitlab_prometheus}}'
+gitlab_postgres_exporter: '{{gitlab_prometheus}}'
+gitlab_gitlab_monitor: '{{gitlab_prometheus}}'
 
 # Gitlab backups
 gitlab_backup_enabled: false

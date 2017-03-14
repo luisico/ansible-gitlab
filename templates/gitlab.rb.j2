@@ -1,11 +1,10 @@
 ## GitLab configuration settings
+##! https://gitlab.com/gitlab-org/omnibus-gitlab/raw/master/files/gitlab-config-template/gitlab.rb.template
+
 
 ## GitLab URL
 ##! Docs: https://docs.gitlab.com/omnibus/settings/configuration.html#configuring-the-external-url-for-gitlab
 external_url '{{gitlab_external_url}}'
-
-##! Latest options are listed at:
-##! https://gitlab.com/gitlab-org/omnibus-gitlab/blob/master/files/gitlab-config-template/gitlab.rb.template
 
 
 ################################################################################
@@ -137,6 +136,15 @@ manage_storage_directories['manage_etc'] = true
 ################################################################################
 
 ################################################################################
+## GitLab Pages
+##! Docs: https://docs.gitlab.com/ce/pages/administration.html
+################################################################################
+
+################################################################################
+## GitLab Pages NGINX
+################################################################################
+
+################################################################################
 ## GitLab CI
 ##! Docs: https://docs.gitlab.com/omnibus/gitlab-ci/README.html
 ################################################################################
@@ -156,12 +164,35 @@ manage_storage_directories['manage_etc'] = true
 
 ################################################################################
 ## Prometheus
+##! Docs: https://docs.gitlab.com/ce/administration/monitoring/performance/prometheus.html
 ################################################################################
 
-prometheus['enable'] = {{gitlab_prometheus|lower}}
+prometheus['enable'] = {{gitlab_prometheus | lower}}
 
 ################################################################################
 ## Prometheus Node Exporter
+##! Docs: https://docs.gitlab.com/ce/administration/monitoring/performance/prometheus.html
 ################################################################################
 
-node_exporter['enable'] = {{gitlab_node_exporter|lower}}
+node_exporter['enable'] = {{gitlab_node_exporter | lower}}
+
+################################################################################
+## Prometheus Redis exporter
+##! Docs: https://docs.gitlab.com/ce/administration/monitoring/performance/prometheus.html
+################################################################################
+
+redis_exporter['enable'] =  {{gitlab_redis_exporter | lower}}
+
+################################################################################
+## Postgres exporter
+##! Docs: https://docs.gitlab.com/ce/administration/monitoring/performance/prometheus.html
+################################################################################
+
+postgres_exporter['enable'] = {{gitlab_postgres_exporter | lower}}
+
+################################################################################
+## Gitlab monitor
+##! Docs: https://docs.gitlab.com/ce/administration/monitoring/performance/prometheus.html
+################################################################################
+
+gitlab_monitor['enable'] = {{gitlab_gitlab_monitor | lower}}
