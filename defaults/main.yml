@@ -39,3 +39,8 @@ gitlab_backup_enabled: false
 gitlab_backup_frequency: daily
 # Time to keep backup in seconds (default: 7 days)
 gitlab_backup_keep_time: 604800
+
+# Docker registry
+gitlab_registry: false
+gitlab_registry_external_url: 'https://{{ansible_hostname}}:5005'
+gitlab_registry_path: /var/opt/gitlab/gitlab-rails/shared/registry

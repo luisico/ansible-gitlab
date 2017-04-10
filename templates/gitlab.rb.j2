@@ -58,6 +58,11 @@ git_data_dirs({'default' => '{{gitlab_git_data_dir}}'})
 ##! Docs: https://docs.gitlab.com/ce/administration/container_registry.html
 ################################################################################
 
+{% if gitlab_registry -%}
+registry_external_url '{{gitlab_registry_external_url}}'
+gitlab_rails['registry_path'] = '{{gitlab_registry_path}}'
+{% endif %}
+
 ################################################################################
 ## GitLab Workhorse
 ##! Docs: https://gitlab.com/gitlab-org/gitlab-workhorse/blob/master/README.md
@@ -161,6 +166,11 @@ manage_storage_directories['manage_etc'] = true
 ################################################################################
 ## Registry NGINX
 ################################################################################
+
+{% if gitlab_registry -%}
+registry_nginx['ssl_certificate'] = '{{gitlab_nginx_ssl_certificate}}'
+registry_nginx['ssl_certificate_key'] = '{{gitlab_nginx_ssl_certificate_key}}'
+{% endif %}
 
 ################################################################################
 ## Prometheus
