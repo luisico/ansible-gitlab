@@ -35,8 +35,16 @@ gitlab_gitlab_monitor: '{{gitlab_prometheus}}'
 
 # Gitlab backups
 gitlab_backup_enabled: false
-# See special_time in Ansible's cron module for details on frequency.
-gitlab_backup_frequency: daily
+
+# Backup frequency (`special_time` is incompatible with any other option)
+gitlab_backup_frequency:
+  special_time: daily
+  # day:
+  # hour:
+  # minute:
+  # month:
+  # weekday:
+
 # Time to keep backup in seconds (default: 7 days)
 gitlab_backup_keep_time: 604800
 
