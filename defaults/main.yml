@@ -36,6 +36,10 @@ gitlab_gitlab_monitor: '{{gitlab_prometheus}}'
 # Gitlab backups
 gitlab_backup_enabled: false
 
+# Backup options
+# Added to `gitlab-rake gitlab:backup:create`, ie `SKIP=artifacts`. See https://docs.gitlab.com/ce/raketasks/backup_restore.html.
+gitlab_backup_options:
+
 # Backup frequency (`special_time` is incompatible with any other option)
 gitlab_backup_frequency:
   special_time: daily
