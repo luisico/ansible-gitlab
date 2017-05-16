@@ -38,7 +38,6 @@ Example:
 TODO
 ----
 - Activate `repo_gpgcheck`. Rpm from repository is not signed, but the repo itself is, however yum gets into validation problems of the repo.
-- Daily backups.
 
 Licence
 -------
