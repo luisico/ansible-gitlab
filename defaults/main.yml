@@ -1,12 +1,15 @@
 ---
 # Gitlab version
-gitlab_version: 9.1.2
+gitlab_version: 9.3.0
 
 # External URL
 gitlab_external_url: '{{ansible_hostname}}'
 
 # Directory to host data
 gitlab_git_data_dir: /var/opt/gitlab/git-data
+
+# Usage statistics
+gitlab_usage_ping_enabled: true
 
 # LDAP options
 gitlab_ldap_enabled: false

@@ -17,6 +17,9 @@ gitlab_rails['gitlab_email_from'] = '{{gitlab_email_from}}'
 gitlab_rails['gitlab_email_display_name'] = '{{gitlab_email_display_name}}'
 gitlab_rails['gitlab_email_reply_to'] = '{{gitlab_email_reply_to}}'
 
+### Usage Statistics
+gitlab_rails['usage_ping_enabled'] = '{{gitlab_usage_ping_enabled|lower}}'
+
 ### LDAP Settings
 ###! Docs: https://docs.gitlab.com/omnibus/settings/ldap.html
 gitlab_rails['ldap_enabled'] = {{gitlab_ldap_enabled|lower}}
@@ -47,6 +50,8 @@ EOS
 
 ### Backup Settings
 ###! Docs: https://docs.gitlab.com/omnibus/settings/backups.html
+
+###! The duration in seconds to keep backups before they are allowed to be deleted
 gitlab_rails['backup_keep_time'] = {{gitlab_backup_keep_time}}
 
 ### For setting up different data storing directory
@@ -101,13 +106,18 @@ gitlab_rails['registry_path'] = '{{gitlab_registry_path}}'
 ################################################################################
 
 ################################################################################
-## GitLab Nginx
+## GitLab NGINX
 ##! Docs: https://docs.gitlab.com/omnibus/settings/nginx.html
 ################################################################################
 
 nginx['redirect_http_to_https'] = {{gitlab_nginx_redirect_http_to_https|lower}}
 nginx['ssl_certificate'] = '{{gitlab_nginx_ssl_certificate}}'
 nginx['ssl_certificate_key'] = '{{gitlab_nginx_ssl_certificate_key}}'
+
+################################################################################
+## Runtime directory
+##! Docs: https://docs.gitlab.com//omnibus/settings/configuration.html#runtime-directory
+################################################################################
 
 ################################################################################
 ## GitLab Logging
@@ -128,7 +138,8 @@ manage_accounts['enable'] = true
 
 ################################################################################
 ## Storage directories
-##! Disable managing storage directories ##! Docs: https://docs.gitlab.com/omnibus/settings/configuration.html#disable-storage-directories-management
+##! Disable managing storage directories
+##! Docs: https://docs.gitlab.com/omnibus/settings/configuration.html#disable-storage-directories-management
 ################################################################################
 
 manage_storage_directories['enable'] = true
@@ -174,7 +185,7 @@ registry_nginx['ssl_certificate_key'] = '{{gitlab_nginx_ssl_certificate_key}}'
 
 ################################################################################
 ## Prometheus
-##! Docs: https://docs.gitlab.com/ce/administration/monitoring/performance/
+##! Docs: https://docs.gitlab.com/ce/administration/monitoring/prometheus/
 ################################################################################
 
 prometheus['enable'] = {{gitlab_prometheus | lower}}
