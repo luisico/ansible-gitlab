@@ -39,9 +39,8 @@ gitlab_ldap_user_filter: ''
 gitlab_ldap_ca_cert:
 # NGINX redirect and certificates
 gitlab_nginx_redirect_http_to_https: false
-# TODO: put dummy values here
-gitlab_nginx_ssl_certificate: '{{ssl_certs_cert_path}}'
-gitlab_nginx_ssl_certificate_key: '{{ssl_certs_privkey_path}}'
+gitlab_nginx_ssl_certificate: '{{gitlab_config_dir}}/ssl/{{ansible_hostname}}.crt'
+gitlab_nginx_ssl_certificate_key: '{{gitlab_config_dir}}/ssl/{{ansible_hostname}}.key'
 
 # Main Gitlab contact
 gitlab_email_from: 'git@{{ansible_hostname}}'
