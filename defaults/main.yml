@@ -37,7 +37,9 @@ gitlab_ldap_user_filter: ''
 
 # LDAP CA certificate
 gitlab_ldap_ca_cert:
-# NGINX redirect and certificates
+
+# SSL Configuration
+gitlab_letsencrypt_enabled: true
 gitlab_nginx_redirect_http_to_https: false
 gitlab_nginx_ssl_certificate: '{{gitlab_config_dir}}/ssl/{{ansible_hostname}}.crt'
 gitlab_nginx_ssl_certificate_key: '{{gitlab_config_dir}}/ssl/{{ansible_hostname}}.key'
