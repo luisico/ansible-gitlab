@@ -247,9 +247,6 @@ gitlab_rails['ldap_servers'] = YAML.load <<-'EOS'
       name:       'cn'
       first_name: 'givenName'
       last_name:  'sn'
-    group_base: '{{gitlab_ldap_group_base}}'
-    admin_group: ''
-    sync_ssh_keys: false
 EOS
 
 ### OmniAuth Settings
