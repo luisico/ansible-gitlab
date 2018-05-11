@@ -1,0 +1,52 @@
+---
+- name: Add official repo
+  yum_repository: name=gitlab-ce description='Gitlab CE' enabled=no baseurl=https://packages.gitlab.com/gitlab/gitlab-ce/el/{{ansible_distribution_major_version}}/$basearch gpgcheck=no gpgkey=https://packages.gitlab.com/gitlab/gitlab-ce/gpgkey state=present owner=root group=root mode=0644
+
+- name: Install dependencies
+  yum: name={{item}} state=present
+  with_items:
+    - curl
+    - openssh-server
+    - openssh-clients
+    - postfix
+
+- name: Install GitLab version {{gitlab_version}}
+  yum: name=gitlab-ce-{{gitlab_version}} state=present enablerepo=gitlab-ce
+  when: gitlab_version != 'latest'
+  notify: Restart gitlab
+
+- name: Install latest GitLab
+  yum: name=gitlab-ce state=latest enablerepo=gitlab-ce
+  when: gitlab_version == 'latest'
+  notify: Restart gitlab
+
+- name: Enable ssh server
+  service: name=sshd state=started enabled=yes
+
+- name: Bootstrap GitLab
+  command: gitlab-ctl reconfigure
+  args:
+    creates: '/var/opt/gitlab/bootstrapped'
+
+- name: Configure GitLab
+  template: dest=/etc/gitlab/gitlab.rb src=gitlab.rb.j2 owner=root group=root mode=0600 backup=yes
+  notify: Restart gitlab
+
+- name: Add backup cron jobs
+  cron:
+    name: '{{item.name}}'
+    job: '{{item.job}}'
+    user: root
+    state: present
+    disabled: '{{not gitlab_backup_enabled}}'
+    minute:   '{{gitlab_backup_frequency.minute | default(omit)}}'
+    hour:     '{{gitlab_backup_frequency.hour | default(omit)}}'
+    day:      '{{gitlab_backup_frequency.day | default(omit)}}'
+    month:    '{{gitlab_backup_frequency.month | default(omit)}}'
+    weekday:  '{{gitlab_backup_frequency.weekday | default(omit)}}'
+    special_time: '{{gitlab_backup_frequency.special_time | default(omit)}}'
+  with_items:
+    - name: Gitlab data backup
+      job: 'gitlab-rake gitlab:backup:create {{gitlab_backup_options}}'
+    - name: Gitlab config backup
+      job: 'umask 0077; tar cf /var/opt/gitlab/backups/$(date +"\%s_\%Y_\%m_\%d_gitlab_config.tar") -C / etc/gitlab etc/ssh && find /var/opt/gitlab/backups/ -name "*_gitlab_config.tar" -not -newermt "-{{gitlab_backup_keep_time}} seconds" -delete'

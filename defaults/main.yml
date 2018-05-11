@@ -1,4 +1,7 @@
 ---
+# Gitlab running mode
+gitlab_running_platform: omnibus
+
 # Gitlab version
 gitlab_version: 9.3.0
 
@@ -7,6 +10,9 @@ gitlab_external_url: '{{ansible_hostname}}'
 
 # Directory to host data
 gitlab_git_data_dir: /var/opt/gitlab/git-data
+gitlab_config_dir: /etc/gitlab
+gitlab_data_dir: /var/opt/gitlab
+gitlab_logs_dir: /var/log/gitlab
 
 # Usage statistics
 gitlab_usage_ping_enabled: true
