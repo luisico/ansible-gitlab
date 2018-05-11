@@ -80,3 +80,6 @@ gitlab_backup_keep_time: 604800
 gitlab_registry: false
 gitlab_registry_external_url: 'https://{{ansible_hostname}}:5005'
 gitlab_registry_path: /var/opt/gitlab/gitlab-rails/shared/registry
+
+# Default projects features
+gitlab_default_wiki: true
