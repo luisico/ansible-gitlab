@@ -1,0 +1,19 @@
+---
+- name: Ensure volume directories are present
+  file: path={{item}} state=directory owner=root group=root mode=0755
+  with_items:
+    - '{{gitlab_config_dir}}'
+    - '{{gitlab_data_dir}}'
+    - '{{gitlab_logs_dir}}'
+
+- name: Configure GitLab
+  template: dest=/etc/gitlab/gitlab.rb src=gitlab.rb.j2 owner=root group=root mode=0600
+  notify: Restart gitlab container
+
+- name: Run container
+  docker_container: name=gitlab image='gitlab/gitlab-ce:{{gitlab_version}}-ce.0' ports='443:443,80:80,23:22' hostname={{ansible_hostname}} restart_policy=always state=started
+  args:
+    volumes:
+      - '{{gitlab_config_dir}}:/etc/gitlab'
+      - '{{gitlab_data_dir}}:/var/opt/gitlab'
+      - '{{gitlab_logs_dir}}:/var/log/gitlab'

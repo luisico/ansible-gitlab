@@ -8,11 +8,12 @@ gitlab_version: 9.3.0
 # External URL
 gitlab_external_url: '{{ansible_hostname}}'
 
-# Directory to host data
-gitlab_git_data_dir: /var/opt/gitlab/git-data
+# Gitlab directories
+# Only gitlab_dit_data_dir is used when using omnibus
 gitlab_config_dir: /etc/gitlab
 gitlab_data_dir: /var/opt/gitlab
 gitlab_logs_dir: /var/log/gitlab
+gitlab_git_data_dir: '{{gitlab_data_dir}}/git-data'
 
 # Usage statistics
 gitlab_usage_ping_enabled: true

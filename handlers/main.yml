@@ -1,3 +1,6 @@
 ---
 - name: Restart gitlab
   command: gitlab-ctl reconfigure
+
+- name: Restart gitlab container
+  docker_container: name=gitlab state=started restart=yes
