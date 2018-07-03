@@ -11,7 +11,7 @@
   notify: Restart gitlab container
 
 - name: Run container
-  docker_container: name=gitlab image='gitlab/gitlab-ce:{{gitlab_version}}-ce.0' ports='443:443,80:80,23:22' hostname={{ansible_hostname}} restart_policy=always state=started
+  docker_container: name=gitlab image='gitlab/gitlab-ce:{{gitlab_version}}-ce.0' ports='{{gitlab_interface_address}}:443:443,{{gitlab_interface_address}}:80:80,{{gitlab_interface_address}}:22:22,{{gitlab_interface_address}}:5005:5005' hostname={{ansible_hostname}} restart_policy=always state=started log_options='max-size=100m'
   args:
     volumes:
       - '{{gitlab_config_dir}}:/etc/gitlab'

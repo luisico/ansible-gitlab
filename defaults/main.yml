@@ -83,3 +83,6 @@ gitlab_registry_path: /var/opt/gitlab/gitlab-rails/shared/registry
 
 # Default projects features
 gitlab_default_wiki: true
+
+# Interface IP address
+gitlab_interface_address:
