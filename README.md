@@ -40,6 +40,9 @@ Example:
 TODO
 ----
 - Activate `repo_gpgcheck`. Rpm from repository is not signed, but the repo itself is, however yum gets into validation problems of the repo.
+- Use docker-composer.
+- Run docker as an unpriviled user.
+- Figure out IP address from interface.
 
 Licence
 -------
