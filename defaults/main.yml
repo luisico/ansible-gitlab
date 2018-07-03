@@ -6,7 +6,7 @@ gitlab_running_platform: omnibus
 gitlab_version: 10.7.3
 
 # External URL
-gitlab_external_url: '{{ansible_hostname}}'
+gitlab_external_url: 'http://{{ansible_fqdn}}'
 
 # Gitlab directories
 # Only gitlab_dit_data_dir is used when using omnibus
